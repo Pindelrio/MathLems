@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathLems.Pages.ProblemPage"
+             Title="{Binding Statement}">
+    
+    <StackLayout Margin="20" Spacing="20">
+        <Label Text="1r Problema" FontFamily="QuicksandBold" FontSize="26"></Label>
+        <Frame CornerRadius="20">
+            
+            <Label 
+                Text="La Maria té 4 pomes. El Joan té 6 plàtans. La Júlia té 2 mandarines. Quantes fruites tenen entre tots?"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+        </Frame>
+
+        <StackLayout>
+            <Frame BackgroundColor="{StaticResource Primary}" CornerRadius="20">
+                <Label Text="Què demana el problema?" FontFamily="QuicksandBold" FontSize="16"/>
+            </Frame>
+            <RadioButton Content="El número total de fruites" />
+            <RadioButton Content="El nom dels nens i nenes" />
+            <RadioButton Content="El nom de la persona que té més fruita." />
+            <RadioButton Content="El números de pomes que té la Maria."/>
+        </StackLayout>
+        <Button Text="Comprova-ho" VerticalOptions="EndAndExpand" Clicked="OnCheckClicked"></Button>
+    </StackLayout>
+</ContentPage>

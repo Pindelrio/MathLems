@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathLems.Pages.LevelChoisePage"
+             Title="Escull la dificultat">
+    <StackLayout Margin="20" Spacing="20">
+        <Frame BackgroundColor="{StaticResource Primary}" CornerRadius="20" >
+            <Label Text="Entrenament: &#x0a;&#x0a; Enunciats curts 1 operació" HorizontalTextAlignment="Center" FontSize="26" TextColor="#134875"></Label>
+        </Frame>
+        <Frame BackgroundColor="{StaticResource Primary}" CornerRadius="20" >
+            <Label Text="Avançat: &#x0a;&#x0a; Enunciats llargs 1 operació" HorizontalTextAlignment="Center" FontSize="26" TextColor="#134875"></Label>
+        </Frame>
+        <Frame BackgroundColor="{StaticResource Primary}" CornerRadius="20" >
+            <Label Text="Expert: &#x0a;&#x0a; Enunciats llargs vàries operacions" HorizontalTextAlignment="Center" FontSize="26" TextColor="#134875"></Label>
+        </Frame>
+        
+        <Button Text="Continuar" Clicked="OnContinueClicked" VerticalOptions="EndAndExpand"></Button>
+    </StackLayout>
+</ContentPage>

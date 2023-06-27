@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathLems.MainPage"
+             Shell.NavBarIsVisible="false">
+    <StackLayout Margin="40" HorizontalOptions="Center" VerticalOptions="Center">
+        <Image Source="dotnet_bot.svg" ></Image>
+        <StackLayout Margin="40" HorizontalOptions="Center" Spacing="10">
+            <Label Text="MathLems" HorizontalOptions="Center" FontFamily="QuicksandBold" FontSize="26" TextColor="{StaticResource Primary}"></Label>
+            <Label Text="La manera més divertida, efectiva d'apendre matemàtiques" HorizontalOptions="Center" FontFamily="QuicksandBold" FontSize="16"></Label>
+        </StackLayout>
+        <StackLayout Margin="10" Spacing="10" VerticalOptions="EndAndExpand">
+            <Button Text="Començar ara" Clicked="OnBeginNow" FontFamily="QuicksandSemiBold"></Button>
+            <Button Text="Ja tinc una compte" Clicked="OnAlreadyRegistred" FontFamily="QuicksandSemiBold"></Button>
+            <Button Text="Problema" Clicked="OnProblemClicked" FontFamily="QuicksandSemiBold"></Button>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

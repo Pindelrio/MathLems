@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathLems.Pages.AvatarChoisePage"
+             Title="Tria el teu avatar">
+    <StackLayout Margin="20" Spacing="10">
+        
+        
+        <StackLayout Margin="0,20,0,20">
+        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="5" RowSpacing="5">
+            <StackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" Margin="0,0,0,15">
+                <Label Text="Mag" FontFamily="QuicksandBold" FontSize="16" Grid.Row="1" Grid.Column="0"></Label>
+                <Path Fill="#50c5b7" Stroke="Red">
+                    <Path.Data>
+                        <EllipseGeometry Center="50,50"
+                     RadiusX="50"
+                     RadiusY="50" />
+                    </Path.Data>
+                </Path>
+                
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center">
+                <Label Text="Bruixot" FontFamily="QuicksandBold" FontSize="16" Grid.Row="1" Grid.Column="0"></Label>
+                <Path Fill="#fc844e" Stroke="Red">
+                    <Path.Data>
+                        <EllipseGeometry Center="50,50"
+                     RadiusX="50"
+                     RadiusY="50" />
+                    </Path.Data>
+                </Path>
+                
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center">
+                <Label Text="Monstre" FontFamily="QuicksandBold" FontSize="16" Grid.Row="1" Grid.Column="0"></Label>
+                <Path Fill="#b02556" Stroke="Red">
+                    <Path.Data>
+                        <EllipseGeometry Center="50,50"
+                     RadiusX="50"
+                     RadiusY="50" />
+                    </Path.Data>
+                </Path>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" Margin="0,0,0,15">
+                <Label Text="SuperHeroi" FontFamily="QuicksandBold" FontSize="16" Grid.Row="1" Grid.Column="0"></Label>
+                <Path Fill="#b53fa7" Stroke="Red">
+                    <Path.Data>
+                        <EllipseGeometry Center="50,50"
+                     RadiusX="50"
+                     RadiusY="50" />
+                    </Path.Data>
+                </Path>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                <Label Text="SuperHeroïna" FontFamily="QuicksandBold" FontSize="16" Grid.Row="1" Grid.Column="0"></Label>
+                <Path Fill="#ffe466" Stroke="Red">
+                    <Path.Data>
+                        <EllipseGeometry Center="50,50"
+                     RadiusX="50"
+                     RadiusY="50" />
+                    </Path.Data>
+                </Path>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Center">
+                <Label Text="Monstre" FontFamily="QuicksandBold" FontSize="16" Grid.Row="1" Grid.Column="0"></Label>
+                <Path Fill="#2e7ab3" Stroke="Red">
+                    <Path.Data>
+                        <EllipseGeometry Center="50,50"
+                     RadiusX="50"
+                     RadiusY="50" />
+                    </Path.Data>
+                </Path>
+            </StackLayout>
+            
+        </Grid>
+        </StackLayout>
+        <Button Text="Continuar" FontFamily="QuicksandBold" FontSize="16" Margin="20,5,20,5" VerticalOptions="EndAndExpand" Clicked="OnContinueClicked"></Button>
+    </StackLayout>
+</ContentPage>

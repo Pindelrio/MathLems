@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathLems.Pages.ProblemCRUDPage"
+             Title="{Binding Statement}">
+
+    <StackLayout Margin="20" Spacing="20">
+        <VerticalStackLayout>
+
+            <!--Statemement-->
+            <Label Text="Statement:" FontFamily="QuicksandBold" FontSize="26"></Label>
+            <Editor Placeholder="Statement"></Editor>
+
+            <!--Operation-->
+            <Label Text="Operation:" FontFamily="QuicksandBold" FontSize="26"></Label>
+            <Editor Placeholder="Operation"></Editor>
+
+            <!--Question-->
+            <HorizontalStackLayout>
+                <Label Text="Question:" FontFamily="QuicksandBold" FontSize="26"></Label>
+                <Picker Title="Question" VerticalOptions="CenterAndExpand"></Picker>
+                <Button Text="Add"></Button>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+
+                <!--Level-->
+                <Label Text="Level:" FontFamily="QuicksandBold" FontSize="26"></Label>
+                <Picker></Picker>
+
+                <!--Gameplay-->
+                <Label Text="Gameplay:" FontFamily="QuicksandBold" FontSize="26"></Label>
+                <Picker></Picker>
+
+                <!--Language-->
+                <Label Text="Language:" FontFamily="QuicksandBold" FontSize="26"></Label>
+                <Picker x:Name="picker"
+                    Title="Select a language">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Baboon</x:String>
+                            <x:String>Capuchin Monkey</x:String>
+                            <x:String>Blue Monkey</x:String>
+                            <x:String>Squirrel Monkey</x:String>
+                            <x:String>Golden Lion Tamarin</x:String>
+                            <x:String>Howler Monkey</x:String>
+                            <x:String>Japanese Macaque</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </StackLayout>
+</ContentPage>

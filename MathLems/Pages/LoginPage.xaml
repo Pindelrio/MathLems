@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MathLems.Pages.LoginPage"
+             Title="LoginPage"
+             BackgroundColor="{StaticResource White}">
+    <Grid>
+        <StackLayout Margin="10">
+            <Image Source="dotnet_bot.svg" HorizontalOptions="CenterAndExpand" HeightRequest="100" Margin="20"></Image>
+
+            <StackLayout Margin="0,70">
+                <Label Style="{StaticResource welcome}" FontSize="26" Text="Inicia la sessió"></Label>
+                <Label FontFamily="QuicksandBold" FontSize="16" TextColor="{StaticResource Secondary}" Text="Hola de nou!"></Label>
+            </StackLayout>
+
+            <StackLayout>
+                <Label FontFamily="QuicksandBold" FontSize="16" 
+                       TextColor="{StaticResource Primary}" Text="Email"></Label>
+                <Grid Margin="0,5">
+                    <Frame Opacity="0.3" BackgroundColor="White" CornerRadius="5">
+                        <Entry x:Name="Username" BackgroundColor="Transparent" TextColor="{StaticResource Primary}" Margin="5,0" 
+                               PlaceholderColor="Gray" Placeholder="Enter username"></Entry>
+                    </Frame>
+                </Grid>
+
+                <Label FontFamily="QuicksandBold" FontSize="16" 
+                       TextColor="{StaticResource Primary}" Text ="Password"></Label>
+                <Grid Margin="0,5">
+                    <Frame Opacity="0.3" BackgroundColor="White" CornerRadius="5">
+                        <Entry BackgroundColor="Transparent" TextColor="{StaticResource Primary}" Margin="5,0" 
+                               PlaceholderColor="Gray" Placeholder="Enter password" IsPassword="True"></Entry>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+
+            <Button Margin="0,15" BackgroundColor="{StaticResource Secondary}"
+                    Text="Sign in" TextColor="{StaticResource Primary}" 
+                    FontFamily="QuicksandBold" Clicked="OnSignInClicked"></Button>
+
+            <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal">
+
+                <Label FontFamily="OpenSansRegular" FontSize="16" VerticalOptions="FillAndExpand"
+                       TextColor="{StaticResource Secondary}" Text="ForgotPassword?"></Label>
+
+                <Label FontFamily="OpenSansRegular" FontSize="16" VerticalOptions="FillAndExpand"
+                       TextColor="{StaticResource Secondary}" Text="Register"
+                       HorizontalOptions="EndAndExpand"></Label>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

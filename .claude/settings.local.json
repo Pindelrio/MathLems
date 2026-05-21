@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Projectes\\\\MathLems\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Projectes\\\\MathLems\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Projectes\\\\MathLems\\\\MathLems\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(npm --version)",
+      "Bash(npx create-expo-app@latest *)",
+      "PowerShell(cmd /c \"dir /a C:\\\\Projectes\\\\MathLems\\\\MathLemsApp\\\\node_modules\\\\react-native-worklets\")",
+      "PowerShell(node -e \"try { require\\('C:/Projectes/MathLems/MathLemsApp/node_modules/react-native-worklets/plugin'\\); console.log\\('OK'\\) } catch\\(e\\) { console.log\\('ERROR:', e.message\\) }\" 2>&1)",
+      "PowerShell(npm view *)",
+      "Bash(git add *)"
+    ]
+  }
+}

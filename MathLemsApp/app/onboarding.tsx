@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { usePlayerStore } from '@/store/playerStore';
+import { useAvatarStore } from '@/features/avatar/store/avatarStore';
 import AvatarPicker from '@/components/avatar/AvatarPicker';
 import { COLORS } from '@/constants/theme';
 
@@ -12,11 +13,13 @@ export default function OnboardingScreen() {
   const [name, setName]       = useState('');
   const [avatarId, setAvatar] = useState('wizard');
   const { setName: saveName, setAvatar: saveAvatar, completeOnboarding } = usePlayerStore();
+  const { setBase } = useAvatarStore();
 
   function handleStart() {
     if (!name.trim()) return;
     saveName(name.trim());
     saveAvatar(avatarId);
+    setBase(avatarId);
     completeOnboarding();
     router.replace('/(game)/home');
   }

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { router } from 'expo-router';
 import { useGameStore } from '@/store/gameStore';
@@ -38,6 +38,16 @@ export default function PlayScreen() {
   const problem  = problems[currentQuestionIndex];
   const total    = problems.length;
 
+  const shuffledAnswers = useMemo(() => {
+    const arr = [...problem.answers];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [problem.id]);
+
   const [answerStates, setAnswerStates] = useState<AnswerState[]>(['default', 'default', 'default', 'default']);
   const [mood, setMood]                 = useState<Mood>('idle');
   const [bonusShown, setBonusShown]     = useState(false);
@@ -66,7 +76,7 @@ export default function PlayScreen() {
       if (answerStates[index] !== 'default') return;
 
       const correct = answer.isCorrect;
-      const newStates: AnswerState[] = problem.answers.map((a, i) =>
+      const newStates: AnswerState[] = shuffledAnswers.map((a: Answer, i: number) =>
         i === index
           ? correct ? 'correct' : 'wrong'
           : a.isCorrect ? 'correct' : 'disabled'
@@ -116,7 +126,7 @@ export default function PlayScreen() {
         }
       }, NEXT_DELAY);
     },
-    [answerStates, problem, streak, lives, currentQuestionIndex, total, worldId, sessionScore]
+    [answerStates, problem, shuffledAnswers, streak, lives, currentQuestionIndex, total, worldId, sessionScore]
   );
 
   if (!problem) return null;
@@ -163,7 +173,7 @@ export default function PlayScreen() {
 
       {/* Answers */}
       <View style={styles.answers}>
-        {problem.answers.map((ans, i) => (
+        {shuffledAnswers.map((ans: Answer, i: number) => (
           <AnswerOption
             key={i}
             content={ans.content}

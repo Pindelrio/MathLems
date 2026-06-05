@@ -2,16 +2,22 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import { router } from 'expo-router';
 import { usePlayerStore } from '@/store/playerStore';
 import { useGameStore } from '@/store/gameStore';
+import { useAvatarStore } from '@/features/avatar/store/avatarStore';
+import { getAvatarBase } from '@/features/avatar/data/bases';
+import { AVATAR_ITEMS } from '@/features/avatar/data/items';
+import { composeAvatar } from '@/features/avatar/engine/composer';
+import AvatarRenderer from '@/features/avatar/components/AvatarRenderer';
 import { WORLDS } from '@/data/worlds';
 import { COLORS } from '@/constants/theme';
 import WorldCard from '@/components/ui/WorldCard';
-import { AVATARS } from '@/components/avatar/AvatarPicker';
 
 export default function HomeScreen() {
-  const { name, avatarId, totalScore } = usePlayerStore();
+  const { name, totalScore } = usePlayerStore();
   const { worldProgress, isWorldUnlocked } = useGameStore();
+  const { baseId, equipped } = useAvatarStore();
 
-  const avatar = AVATARS.find((a) => a.id === avatarId);
+  const base = getAvatarBase(baseId);
+  const composed = composeAvatar(base, equipped, AVATAR_ITEMS);
 
   function handleWorldPress(worldId: number) {
     router.push(`/(game)/world/${worldId}`);
@@ -22,7 +28,9 @@ export default function HomeScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.playerInfo}>
-          <Text style={styles.avatarEmoji}>{avatar?.emoji ?? '🧙‍♂️'}</Text>
+          <View style={styles.avatarCircle}>
+            <AvatarRenderer avatar={composed} size={48} />
+          </View>
           <View>
             <Text style={styles.greeting}>Hola, {name}!</Text>
             <Text style={styles.score}>🏆 {totalScore} punts totals</Text>
@@ -80,7 +88,17 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.bgMid,
   },
   playerInfo: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  avatarEmoji: { fontSize: 36 },
+  avatarCircle: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: COLORS.bgDark,
+    borderWidth: 2,
+    borderColor: COLORS.gold,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
   greeting: {
     fontFamily: 'Quicksand-Bold',
     fontSize: 18,

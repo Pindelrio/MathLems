@@ -6,21 +6,27 @@ import {
 import { router } from 'expo-router';
 import { usePlayerStore } from '@/store/playerStore';
 import { useGameStore } from '@/store/gameStore';
-import AvatarPicker from '@/components/avatar/AvatarPicker';
+import { useAvatarStore } from '@/features/avatar/store/avatarStore';
+import { getAvatarBase } from '@/features/avatar/data/bases';
+import { AVATAR_ITEMS } from '@/features/avatar/data/items';
+import { composeAvatar } from '@/features/avatar/engine/composer';
+import AvatarRenderer from '@/features/avatar/components/AvatarRenderer';
 import { COLORS } from '@/constants/theme';
 
 export default function SettingsScreen() {
   const player = usePlayerStore();
   const { worldProgress, resetSession } = useGameStore();
+  const { baseId, equipped } = useAvatarStore();
 
-  const [name, setName]       = useState(player.name);
-  const [avatarId, setAvatar] = useState(player.avatarId);
-  const [saved, setSaved]     = useState(false);
+  const [name, setName] = useState(player.name);
+  const [saved, setSaved] = useState(false);
+
+  const avatarBase = getAvatarBase(baseId);
+  const composedAvatar = composeAvatar(avatarBase, equipped, AVATAR_ITEMS);
 
   function handleSave() {
     if (!name.trim()) return;
     player.setName(name.trim());
-    player.setAvatar(avatarId);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   }
@@ -95,7 +101,18 @@ export default function SettingsScreen() {
         {/* Avatar */}
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>El teu avatar</Text>
-          <AvatarPicker selected={avatarId} onSelect={setAvatar} />
+          <View style={styles.avatarRow}>
+            <View style={styles.avatarPreview}>
+              <AvatarRenderer avatar={composedAvatar} size={80} />
+            </View>
+            <TouchableOpacity
+              style={styles.editAvatarBtn}
+              onPress={() => router.push('/avatar-editor' as any)}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.editAvatarTxt}>✏️ Personalitzar Avatar</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Save */}
@@ -175,6 +192,32 @@ const styles = StyleSheet.create({
   },
   badgesRow: { flexDirection: 'row', gap: 8 },
   badgeEmoji: { fontSize: 32 },
+  avatarRow: { flexDirection: 'row', alignItems: 'center', gap: 16 },
+  avatarPreview: {
+    width: 88,
+    height: 88,
+    borderRadius: 44,
+    backgroundColor: COLORS.bgDark,
+    borderWidth: 2,
+    borderColor: COLORS.gold,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  editAvatarBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: COLORS.gold,
+    alignItems: 'center',
+  },
+  editAvatarTxt: {
+    fontFamily: 'Quicksand-SemiBold',
+    fontSize: 14,
+    color: COLORS.gold,
+  },
 
   input: {
     backgroundColor: COLORS.bgDark,

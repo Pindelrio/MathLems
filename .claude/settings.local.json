@@ -12,7 +12,12 @@
       "PowerShell(cmd /c \"dir /a C:\\\\Projectes\\\\MathLems\\\\MathLemsApp\\\\node_modules\\\\react-native-worklets\")",
       "PowerShell(node -e \"try { require\\('C:/Projectes/MathLems/MathLemsApp/node_modules/react-native-worklets/plugin'\\); console.log\\('OK'\\) } catch\\(e\\) { console.log\\('ERROR:', e.message\\) }\" 2>&1)",
       "PowerShell(npm view *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Skill(schedule)",
+      "Bash(Select-String *)",
+      "Bash(dotnet build *)"
     ]
   }
 }

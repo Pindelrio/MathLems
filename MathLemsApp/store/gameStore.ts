@@ -21,6 +21,7 @@ interface GameState {
   completeWorld: (worldId: number, score: number, badge: string) => void;
   addCollectedItem: (itemId: string) => void;
   resetSession: () => void;
+  resetProgress: () => void;
   isWorldUnlocked: (worldId: number) => boolean;
 }
 
@@ -93,8 +94,19 @@ export const useGameStore = create<GameState>()(
           collectedItems: [],
         }),
 
+      resetProgress: () =>
+        set({
+          worldProgress: {},
+          currentWorldId: null,
+          currentQuestionIndex: 0,
+          lives: MAX_LIVES,
+          streak: 0,
+          sessionScore: 0,
+          collectedItems: [],
+        }),
+
       isWorldUnlocked: (worldId) => {
-        if (worldId === 1) return true;
+        if (worldId === 1 || worldId === 4) return true;
         const prev = get().worldProgress[worldId - 1];
         return prev?.completed === true;
       },

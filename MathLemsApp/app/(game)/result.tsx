@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { useGameStore } from '@/store/gameStore';
 import { usePlayerStore } from '@/store/playerStore';
 import { WORLDS } from '@/data/worlds';
+import { LEMS_WORLDS } from '@/data/lems-worlds';
 import { REWARDS, BONUS_ITEMS } from '@/data/rewards';
 import { COLORS } from '@/constants/theme';
 
@@ -19,10 +20,12 @@ export default function ResultScreen() {
   } = useGameStore();
   const { totalScore } = usePlayerStore();
 
-  const worldId   = currentWorldId ?? 1;
-  const world     = WORLDS.find((w) => w.id === worldId)!;
-  const completed = lives > 0;
-  const nextWorld = WORLDS.find((w) => w.id === worldId + 1);
+  const worldId    = currentWorldId ?? 1;
+  const isLemsWorld = worldId >= 4;
+  const allWorlds  = [...WORLDS, ...LEMS_WORLDS];
+  const world      = allWorlds.find((w) => w.id === worldId)!;
+  const completed  = lives > 0;
+  const nextWorld  = allWorlds.find((w) => w.id === worldId + 1);
 
   // animations
   const starScale  = useRef(new Animated.Value(0)).current;
@@ -70,7 +73,7 @@ export default function ResultScreen() {
           <Animated.View style={[styles.badge, { opacity: fadeIn }]}>
             <Text style={styles.badgeEmoji}>{world.emoji}</Text>
             <Text style={[styles.badgeText, { color: world.accentColor }]}>
-              Insignia del Món {world.id}!
+              {isLemsWorld ? `Insignia del Repte ${world.id - 3}!` : `Insignia del Món ${world.id}!`}
             </Text>
           </Animated.View>
         )}
@@ -104,7 +107,7 @@ export default function ResultScreen() {
           <Animated.View style={[styles.unlockCard, { opacity: fadeIn, borderColor: nextWorld.accentColor }]}>
             <Text style={styles.unlockTitle}>🔓 Nou món desbloquejat!</Text>
             <Text style={[styles.unlockName, { color: nextWorld.accentColor }]}>
-              {nextWorld.emoji} Món {nextWorld.id}: {nextWorld.name}
+              {nextWorld.emoji} {nextWorld.id >= 4 ? `Repte ${nextWorld.id - 3}` : `Món ${nextWorld.id}`}: {nextWorld.name}
             </Text>
           </Animated.View>
         )}

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { usePlayerStore } from '@/store/playerStore';
 import { useGameStore } from '@/store/gameStore';
@@ -8,16 +8,25 @@ import { AVATAR_ITEMS } from '@/features/avatar/data/items';
 import { composeAvatar } from '@/features/avatar/engine/composer';
 import AvatarRenderer from '@/features/avatar/components/AvatarRenderer';
 import { WORLDS } from '@/data/worlds';
+import { LEMS_WORLDS } from '@/data/lems-worlds';
 import { COLORS } from '@/constants/theme';
 import WorldCard from '@/components/ui/WorldCard';
+import { getLemsImage, getLemsStage, pointsToNextStage } from '@/utils/lemsEvolution';
 
 export default function HomeScreen() {
-  const { name, totalScore } = usePlayerStore();
+  const { name, totalScore, activePlanet } = usePlayerStore();
   const { worldProgress, isWorldUnlocked } = useGameStore();
   const { baseId, equipped } = useAvatarStore();
 
   const base = getAvatarBase(baseId);
   const composed = composeAvatar(base, equipped, AVATAR_ITEMS);
+
+  const worlds = activePlanet === 'lems' ? LEMS_WORLDS : WORLDS;
+  const isMaths = activePlanet === 'maths';
+
+  const lemsStage = getLemsStage(totalScore);
+  const lemsImg = getLemsImage(totalScore);
+  const nextStagePoints = pointsToNextStage(totalScore);
 
   function handleWorldPress(worldId: number) {
     router.push(`/(game)/world/${worldId}`);
@@ -44,13 +53,42 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Lems mascot */}
+      {/* Planet tag + switch button */}
+      <View style={styles.planetBar}>
+        <View style={[styles.planetTag, isMaths ? styles.planetTagMaths : styles.planetTagLems]}>
+          <Text style={styles.planetTagText}>
+            {isMaths ? '🌍 Planeta Maths' : '🧩 Planeta Lems'}
+          </Text>
+        </View>
+        <TouchableOpacity onPress={() => router.push('/planet-select')} style={styles.switchBtn}>
+          <Text style={styles.switchBtnText}>canviar</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Lems mascot + evolució */}
       <View style={styles.lemsContainer}>
-        <Text style={styles.lemsEmoji}>🐉</Text>
+        <View style={styles.lemsAvatarWrap}>
+          <Image
+            source={lemsImg}
+            style={styles.lemsImg}
+            resizeMode="contain"
+          />
+          <Text style={styles.lemsStageLabel}>Niv. {lemsStage}</Text>
+        </View>
         <View style={styles.speechBubble}>
           <Text style={styles.speechText}>
-            Escull un món i comencem!
+            {isMaths
+              ? 'Escull un món i comencem!'
+              : 'Descobreix quina operació cal fer!'}
           </Text>
+          {nextStagePoints !== null && (
+            <Text style={styles.evolutionHint}>
+              ⬆️ {nextStagePoints} pts per evolucionar
+            </Text>
+          )}
+          {nextStagePoints === null && (
+            <Text style={styles.evolutionMax}>🐉 Forma màxima!</Text>
+          )}
         </View>
       </View>
 
@@ -60,8 +98,10 @@ export default function HomeScreen() {
         contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.sectionTitle}>🗺️ Els teus móns</Text>
-        {WORLDS.map((world) => (
+        <Text style={styles.sectionTitle}>
+          {isMaths ? '🗺️ Els teus móns' : '🧩 Reptes de Lems'}
+        </Text>
+        {worlds.map((world) => (
           <WorldCard
             key={world.id}
             world={world}
@@ -116,10 +156,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingVertical: 12,
     gap: 12,
   },
-  lemsEmoji: { fontSize: 52 },
+  lemsAvatarWrap: { alignItems: 'center' },
+  lemsImg: { width: 64, height: 72 },
+  lemsStageLabel: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 11,
+    color: COLORS.gold,
+    marginTop: 2,
+  },
   speechBubble: {
     flex: 1,
     backgroundColor: COLORS.bgMid,
@@ -127,11 +174,56 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.bgLight,
     padding: 12,
+    gap: 4,
   },
   speechText: {
     fontFamily: 'Quicksand-Regular',
     fontSize: 14,
     color: COLORS.text,
+  },
+  evolutionHint: {
+    fontFamily: 'Quicksand-SemiBold',
+    fontSize: 12,
+    color: '#A78BFA',
+  },
+  evolutionMax: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 12,
+    color: COLORS.gold,
+  },
+
+  planetBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingBottom: 8,
+  },
+  planetTag: {
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  planetTagMaths: {
+    backgroundColor: '#0C1A4A',
+    borderColor: '#1E3A8A',
+  },
+  planetTagLems: {
+    backgroundColor: '#1A0B3A',
+    borderColor: '#4C1D95',
+  },
+  planetTagText: {
+    fontFamily: 'Quicksand-SemiBold',
+    fontSize: 13,
+    color: COLORS.text,
+  },
+  switchBtn: { padding: 6 },
+  switchBtnText: {
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 13,
+    color: COLORS.textDim,
+    textDecorationLine: 'underline',
   },
 
   list: { flex: 1 },

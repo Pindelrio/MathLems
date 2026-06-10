@@ -1,5 +1,7 @@
 export type Operation = 'sum' | 'sub' | 'mul' | 'div';
 
+export type Planet = 'maths' | 'lems';
+
 export interface Answer {
   content: string;
   isCorrect: boolean;

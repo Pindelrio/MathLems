@@ -1,18 +1,13 @@
 import { useRef, useEffect } from 'react';
-import { Animated, Text, StyleSheet, Easing } from 'react-native';
+import { Animated, Text, Image, StyleSheet, Easing } from 'react-native';
+import { usePlayerStore } from '@/store/playerStore';
+import { getLemsImage } from '@/utils/lemsEvolution';
 
 type Mood = 'idle' | 'correct' | 'wrong' | 'bonus';
 
 interface LemsReactionProps {
   mood: Mood;
 }
-
-const MOOD_EMOJI: Record<Mood, string> = {
-  idle:    '🐉',
-  correct: '🐉',
-  wrong:   '🐉',
-  bonus:   '🐲',
-};
 
 const MOOD_LABEL: Record<Mood, string> = {
   idle:    '',
@@ -22,6 +17,8 @@ const MOOD_LABEL: Record<Mood, string> = {
 };
 
 export default function LemsReaction({ mood }: LemsReactionProps) {
+  const { totalScore } = usePlayerStore();
+  const lemsImg = getLemsImage(totalScore);
   const bounce = useRef(new Animated.Value(0)).current;
   const shake  = useRef(new Animated.Value(0)).current;
   const star   = useRef(new Animated.Value(0)).current;
@@ -56,7 +53,15 @@ export default function LemsReaction({ mood }: LemsReactionProps) {
         { transform: [{ translateY: bounce }, { translateX: shake }] },
       ]}
     >
-      <Text style={styles.emoji}>{MOOD_EMOJI[mood]}</Text>
+      <Image
+        source={lemsImg}
+        style={[
+          styles.lemsImg,
+          mood === 'wrong'  && styles.lemsWrong,
+          mood === 'bonus'  && styles.lemsBonus,
+        ]}
+        resizeMode="contain"
+      />
       {MOOD_LABEL[mood] ? (
         <Text style={[
           styles.label,
@@ -73,7 +78,9 @@ export default function LemsReaction({ mood }: LemsReactionProps) {
 
 const styles = StyleSheet.create({
   container: { alignItems: 'center' },
-  emoji:     { fontSize: 64 },
+  lemsImg:   { width: 72, height: 80 },
+  lemsWrong: { opacity: 0.75, tintColor: undefined },
+  lemsBonus: { transform: [{ scale: 1.15 }] },
   label: {
     fontFamily: 'Quicksand-Bold',
     fontSize: 14,

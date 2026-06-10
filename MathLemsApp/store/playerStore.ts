@@ -1,15 +1,17 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Player } from '@/types';
+import { Player, Planet } from '@/types';
 
 interface PlayerState extends Player {
   isOnboarded: boolean;
+  activePlanet: Planet;
   setName: (name: string) => void;
   setAvatar: (avatarId: string) => void;
   addBadge: (badge: string) => void;
   addItem: (itemId: string) => void;
   addScore: (points: number) => void;
+  setPlanet: (planet: Planet) => void;
   completeOnboarding: () => void;
   reset: () => void;
 }
@@ -27,6 +29,7 @@ export const usePlayerStore = create<PlayerState>()(
     (set) => ({
       ...DEFAULT_PLAYER,
       isOnboarded: false,
+      activePlanet: 'maths' as Planet,
 
       setName: (name) => set({ name }),
       setAvatar: (avatarId) => set({ avatarId }),
@@ -41,8 +44,9 @@ export const usePlayerStore = create<PlayerState>()(
             : [...s.unlockedItems, itemId],
         })),
       addScore: (points) => set((s) => ({ totalScore: s.totalScore + points })),
+      setPlanet: (planet) => set({ activePlanet: planet }),
       completeOnboarding: () => set({ isOnboarded: true }),
-      reset: () => set({ ...DEFAULT_PLAYER, isOnboarded: false }),
+      reset: () => set({ ...DEFAULT_PLAYER, isOnboarded: false, activePlanet: 'maths' }),
     }),
     {
       name: 'mathlems-player',

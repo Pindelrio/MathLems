@@ -1,16 +1,19 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { WORLDS } from '@/data/worlds';
+import { LEMS_WORLDS } from '@/data/lems-worlds';
 import { getProblemsForWorld } from '@/data/problems';
+import { getLemsProblemsForWorld } from '@/data/lems-problems';
 import { useGameStore } from '@/store/gameStore';
 import { COLORS } from '@/constants/theme';
 
 export default function WorldDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const worldId = Number(id);
-  const world = WORLDS.find((w) => w.id === worldId);
+  const world = WORLDS.find((w) => w.id === worldId) ?? LEMS_WORLDS.find((w) => w.id === worldId);
   const { worldProgress, startWorld } = useGameStore();
-  const problems = getProblemsForWorld(worldId);
+  const isLemsWorld = worldId >= 4;
+  const problems = isLemsWorld ? getLemsProblemsForWorld(worldId) : getProblemsForWorld(worldId);
   const progress = worldProgress[worldId];
 
   if (!world) return null;
@@ -38,14 +41,16 @@ export default function WorldDetailScreen() {
       <View style={styles.header}>
         <Text style={styles.worldEmoji}>{world.emoji}</Text>
         <Text style={[styles.worldName, { color: world.accentColor }]}>
-          Món {world.id}: {world.name}
+          {isLemsWorld ? `Repte ${world.id - 3}` : `Món ${world.id}`}: {world.name}
         </Text>
         <Text style={styles.worldSubtitle}>{world.subtitle}</Text>
       </View>
 
       {/* Info */}
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Operacions d'aquest món</Text>
+        <Text style={styles.cardTitle}>
+          {isLemsWorld ? 'Operacions a identificar' : "Operacions d'aquest món"}
+        </Text>
         {world.operations.map((op) => (
           <Text key={op} style={styles.opItem}>
             {operationLabels[op]}

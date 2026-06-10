@@ -8,6 +8,8 @@ MathLems is an educational math game for kids featuring "Lems", a dragon mascot.
 
 See `MathLems.md` for the full product spec (worlds, reward system, mascot story, avatar items, etc.).
 
+Project documentation is located at `C:\Projectes\MathLems\Docs`.
+
 ## Active Project: MathLemsApp (Expo)
 
 The Expo app lives in `MathLemsApp/`. The legacy MAUI project (`MathLems/`, `MathLemsAPI/`, `MathLems.Framework/`) is kept as reference but is not the active codebase.

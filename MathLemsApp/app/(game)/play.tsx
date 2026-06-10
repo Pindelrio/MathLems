@@ -4,8 +4,10 @@ import { router } from 'expo-router';
 import { useGameStore } from '@/store/gameStore';
 import { usePlayerStore } from '@/store/playerStore';
 import { getProblemsForWorld } from '@/data/problems';
+import { getLemsProblemsForWorld } from '@/data/lems-problems';
 import { getRewardForWorld, BONUS_ITEMS } from '@/data/rewards';
 import { WORLDS } from '@/data/worlds';
+import { LEMS_WORLDS } from '@/data/lems-worlds';
 import { COLORS } from '@/constants/theme';
 import AnswerOption from '@/components/problem/AnswerOption';
 import LivesBar from '@/components/problem/LivesBar';
@@ -32,9 +34,9 @@ export default function PlayScreen() {
   } = useGameStore();
   const { addScore, addBadge } = usePlayerStore();
 
-  const worldId = currentWorldId ?? 1;
-  const world   = WORLDS.find((w) => w.id === worldId)!;
-  const problems = getProblemsForWorld(worldId);
+  const worldId  = currentWorldId ?? 1;
+  const world    = WORLDS.find((w) => w.id === worldId) ?? LEMS_WORLDS.find((w) => w.id === worldId)!;
+  const problems = worldId >= 4 ? getLemsProblemsForWorld(worldId) : getProblemsForWorld(worldId);
   const problem  = problems[currentQuestionIndex];
   const total    = problems.length;
 
@@ -168,7 +170,12 @@ export default function PlayScreen() {
 
       {/* Problem */}
       <View style={styles.problemCard}>
-        <Text style={styles.problemText}>{problem.statement}</Text>
+        <Text style={[
+          styles.problemText,
+          { fontSize: problem.statement.length > 80 ? 16 : problem.statement.length > 40 ? 20 : 24 },
+        ]}>
+          {problem.statement}
+        </Text>
       </View>
 
       {/* Answers */}
@@ -252,7 +259,6 @@ const styles = StyleSheet.create({
   },
   problemText: {
     fontFamily: 'Quicksand-Bold',
-    fontSize: 24,
     color: COLORS.text,
     textAlign: 'center',
   },

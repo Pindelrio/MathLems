@@ -8,6 +8,13 @@ export const REWARDS: RewardItem[] = [
   { id: 'crystal', name: 'Cristall de Foc',emoji: '💎', points: 100, worldIds: [2, 3] },
   { id: 'flame',   name: 'Flama Flotant',  emoji: '🔥', points: 75,  worldIds: [2, 3] },
   { id: 'ember',   name: 'Carbonsença',    emoji: '🪨', points: 40,  worldIds: [2, 3] },
+  // Món 4 – elements d'aventura (Planeta Lems)
+  { id: 'map',     name: 'Mapa del Tresor',emoji: '🗺️', points: 50,  worldIds: [4] },
+  { id: 'anchor',  name: "Àncora d'Or",    emoji: '⚓', points: 30,  worldIds: [4] },
+  // Móns 5 i 6 – elements d'enigma (Planeta Lems)
+  { id: 'puzzle',  name: "Peça d'Enigma",  emoji: '🧩', points: 100, worldIds: [5, 6] },
+  { id: 'orb',     name: 'Orbe Màgic',     emoji: '🔮', points: 75,  worldIds: [5, 6] },
+  { id: 'star',    name: 'Estel Brillant', emoji: '🌟', points: 40,  worldIds: [5, 6] },
 ];
 
 export const BONUS_ITEMS: BonusItem[] = [

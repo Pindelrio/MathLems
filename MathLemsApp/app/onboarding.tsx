@@ -21,7 +21,7 @@ export default function OnboardingScreen() {
     saveAvatar(avatarId);
     setBase(avatarId);
     completeOnboarding();
-    router.replace('/(game)/home');
+    router.replace('/planet-select');
   }
 
   return (
